@@ -1,16 +1,15 @@
 package project;
 
-import project.view.ComandLineService;
-import project.view.impl.ComandLineServiceImpl;
+import project.view.CmdLineService;
+import project.view.impl.CmdLineServiceImpl;
 
 public class App {
 
     public static void main(String[] args) {
         // start view
-        ComandLineService cmd = new ComandLineServiceImpl();
+        CmdLineService cmd = new CmdLineServiceImpl();
         cmd.showMenu();
-
-
+        cmd.getResponse();
     }
 
 }

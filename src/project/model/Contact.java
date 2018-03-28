@@ -2,13 +2,21 @@ package project.model;
 
 public class Contact {
     private String name;
-    public int phoneNumber;
-    //add field - home work
-
+    private int phoneNumber;
+    private String birthday;
 
     public Contact(String name, int phoneNumber) {
         this.name = name;
         this.phoneNumber = phoneNumber;
+        this.birthday = birthday;
+    }
+
+    public String getBirthday() {
+        return birthday;
+    }
+
+    public void setBirthday(String birthday) {
+        this.birthday = birthday;
     }
 
     public String getName() {

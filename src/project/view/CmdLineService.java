@@ -1,8 +1,11 @@
 package project.view;
 
-public interface ComandLineService {
+public interface CmdLineService {
     /**
      *
      */
     void showMenu();
+    void getResponse();
+
+
 }
