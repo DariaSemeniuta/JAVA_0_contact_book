@@ -3,11 +3,21 @@ package project.services.impl;
 import project.model.Contact;
 import project.services.ContactService;
 
+import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
+
 public class ContactServiceImpl implements ContactService {
 
+    //public static final String FILE = "contacts.txt";
+    private List<Contact> contactList = new ArrayList<>();
     @Override
-    public void createContact() {
-        System.out.println("Contact is created");
+    public void createContact(String name,String phone, String birthday) {
+
+        Contact contact = new Contact(name, phone,birthday);
+        contactList.add(contact);
+
+
     }
 
     @Override
@@ -27,6 +37,10 @@ public class ContactServiceImpl implements ContactService {
 
     @Override
     public void showAllContacts() {
-        System.out.println("show all contacts");
+        for (Contact contact1: this.contactList) {
+            System.out.println(contact1.toString());
+        }
     }
+
+
 }
