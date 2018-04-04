@@ -3,6 +3,9 @@ package project.view.impl;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.List;
+
+import project.model.Contact;
 import project.services.impl.ContactServiceImpl;
 import project.view.CmdLineService;
 
@@ -36,16 +39,16 @@ public class CmdLineServiceImpl implements CmdLineService {
                         this.createContact();
                         break;
                     case "2" :
-                        service.editContact();
+                        this.edit();
                         break;
                     case "3" :
-                        service.deleteContact();
+                        this.delete();
                         break;
                     case "4" :
-                        service.findContact();
+                        this.find();
                         break;
                     case "5" :
-                        service.showAllContacts();
+                        this.showAll();
                         break;
                     default:
                         System.out.println("Please enter correct number");
@@ -67,10 +70,85 @@ public class CmdLineServiceImpl implements CmdLineService {
         String name = input.readLine();
         System.out.print("Please enter phone number => ");
         String phone = input.readLine();
-        System.out.print("Please enter birthday number => ");
+        System.out.print("Please enter birthday => ");
         String birthday = input.readLine();
-        this.service.createContact(name,phone,birthday);
+        System.out.print("Please enter age => ");
+        String input_age = input.readLine();
+        int age = 0;
+        do {
+            try {
+                age = Integer.parseInt(input_age);
+            } catch (Exception e) {
+                System.out.print("Please enter correct age => ");
+                input_age = input.readLine();
+            }
+        } while (age == 0);
+        this.service.createContact(name, phone, birthday, age);
         System.out.println("Contact was created");
+        this.showMenu();
+    }
+
+    @Override
+    public void showAll() {
+        this.service.showAllContacts();
+        this.showMenu();
+    }
+
+    @Override
+    public void find() throws IOException {
+        System.out.print("Please enter info(name or phone number) for search=>");
+        String keyWord = input.readLine();
+        List<Contact> searchResult = this.service.findContact(keyWord);
+        if (searchResult.size() > 0){
+            System.out.println("The following contacts were found:");
+            for (Contact result:searchResult){
+                System.out.println(result.toString());
+            }
+        }
+        else{
+            System.out.println("No contacts were found");
+            this.showMenu();
+        }
 
     }
+
+    @Override
+    public void edit() throws IOException {
+        System.out.print("Please enter contact name, which you want to edit =>");
+        String name = input.readLine();
+        if (this.service.findContact(name).size() == 0){
+            System.out.println("There is no "+name+" in contact book");
+        } else {
+            System.out.println("Please enter new info:");
+            System.out.println("If you don't want to change value of field, please just press Enter");
+            System.out.print("Name => ");
+            String newName = input.readLine();
+            System.out.print("Phone number => ");
+            String newPhone = input.readLine();
+            System.out.print("Birthday => ");
+            String newBirthday = input.readLine();
+
+            this.service.editContact(name, newName,newPhone,newBirthday);
+        }
+        this.showMenu();
+    }
+
+    @Override
+    public void delete() throws IOException{
+        System.out.print("Please enter contact name, which you want to delete =>");
+        String name = input.readLine();
+        List<Contact> searchResult = this.service.findContact(name);
+        if (searchResult.size() > 0){
+            System.out.println("The following contacts will be deleted:");
+            for (Contact result:searchResult){
+                System.out.println(result.toString());
+                this.service.deleteContact(result);
+            }
+        }
+        else{
+            System.out.println("No contacts were found");
+            this.showMenu();
+        }
+
+        }
 }

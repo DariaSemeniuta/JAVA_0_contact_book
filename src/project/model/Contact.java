@@ -4,11 +4,13 @@ public class Contact {
     private String name;
     private String phoneNumber;
     private String birthday;
+    private int age;
 
-    public Contact(String name, String phoneNumber, String birthday) {
+    public Contact(String name, String phoneNumber, String birthday, int age) {
         this.name = name;
         this.phoneNumber = phoneNumber;
         this.birthday = birthday;
+        this.age = age;
     }
 
     public String getBirthday() {
@@ -35,12 +37,21 @@ public class Contact {
         this.phoneNumber = phoneNumber;
     }
 
+    public int getAge() {
+        return age;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
+    }
+
     @Override
     public String toString() {
         return "Contact{" +
                 "name='" + name + '\'' +
                 ", phoneNumber='" + phoneNumber + '\'' +
                 ", birthday='" + birthday + '\'' +
+                ", age=" + age +
                 '}';
     }
 }
