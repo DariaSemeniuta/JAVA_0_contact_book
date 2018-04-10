@@ -4,26 +4,28 @@ import project.model.Contact;
 import project.services.ContactService;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class ContactServiceImpl implements ContactService {
 
-    //public static final String FILE = "contacts.txt";
-    private List<Contact> contactList = new ArrayList<>();
+    private Map<Integer,Contact> contactList = new HashMap<>();
+    private static int id = 0;
+
     @Override
     public void createContact(String name,String phone, String birthday, int age) {
-
         Contact contact = new Contact(name, phone, birthday, age);
-        contactList.add(contact);
-
+        contactList.put(id, contact);
+        id++;
     }
 
     @Override
     public List<Contact> findContact(String keyWord) {
         List<Contact> searchResult = new ArrayList<>();
-        for (Contact contact:this.contactList) {
-            if((contact.getName().contains(keyWord))||(contact.getPhoneNumber().contains(keyWord))){
-                searchResult.add(contact);
+        for (Map.Entry<Integer, Contact> contacts: this.contactList.entrySet()) {
+            if((contacts.getValue().getName().contains(keyWord))||(contacts.getValue().getPhoneNumber().contains(keyWord))){
+                searchResult.add(contacts.getValue());
             }
         }
         return  searchResult;
@@ -31,36 +33,40 @@ public class ContactServiceImpl implements ContactService {
 
     @Override
     public void editContact(String name, String newName, String newPhone, String newBirthday) {
-        for (Contact contact:contactList){
-            if (contact.getName().equals(name)) {
+        for (Map.Entry<Integer, Contact> contacts: this.contactList.entrySet()) {
+            if(contacts.getValue().getName().equals(name)){
                 if(! newName.isEmpty()){
-                    contact.setName(newName);
+                    contacts.getValue().setName(newName);
                 }
                 if(! newPhone.isEmpty()){
-                    contact.setPhoneNumber(newPhone);
+                    contacts.getValue().setPhoneNumber(newPhone);
                 }
                 if(! newBirthday.isEmpty()){
-                    contact.setBirthday(newBirthday);
+                    contacts.getValue().setBirthday(newBirthday);
                 }
                 System.out.println("Contact was changed");
-                System.out.println(contact.toString());
+                System.out.println(contacts.getValue().toString());
             }
         }
     }
 
     @Override
     public void deleteContact(Contact contact) {
-        contactList.remove(contact);
+        int key = -1;
+        for (Map.Entry<Integer, Contact> contacts: this.contactList.entrySet()) {
+            if(contacts.getValue().equals(contact)){
+                this.contactList.remove(contacts.getKey());
+                //key = contacts.getKey();
+            }
+        }
         System.out.println("Contact was deleted");
-
     }
 
     @Override
     public void showAllContacts() {
-        for (Contact contact: this.contactList) {
-            System.out.println(contact.toString());
+        for (Map.Entry<Integer,Contact> contacts: this.contactList.entrySet()) {
+            System.out.println(contacts.getValue().toString());
         }
     }
-
 
 }

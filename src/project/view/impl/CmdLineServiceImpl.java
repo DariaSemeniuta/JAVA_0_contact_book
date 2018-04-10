@@ -8,6 +8,7 @@ import java.util.List;
 import project.model.Contact;
 import project.services.impl.ContactServiceImpl;
 import project.view.CmdLineService;
+import project.view.impl.ValidatorService;
 
 public class CmdLineServiceImpl implements CmdLineService {
 
@@ -71,18 +72,9 @@ public class CmdLineServiceImpl implements CmdLineService {
         System.out.print("Please enter phone number => ");
         String phone = input.readLine();
         System.out.print("Please enter birthday => ");
-        String birthday = input.readLine();
+        String birthday = ValidatorService.readDate();
         System.out.print("Please enter age => ");
-        String input_age = input.readLine();
-        int age = 0;
-        do {
-            try {
-                age = Integer.parseInt(input_age);
-            } catch (Exception e) {
-                System.out.print("Please enter correct age => ");
-                input_age = input.readLine();
-            }
-        } while (age == 0);
+        int age = ValidatorService.readInt();
         this.service.createContact(name, phone, birthday, age);
         System.out.println("Contact was created");
         this.showMenu();
@@ -119,6 +111,7 @@ public class CmdLineServiceImpl implements CmdLineService {
         if (this.service.findContact(name).size() == 0){
             System.out.println("There is no "+name+" in contact book");
         } else {
+
             System.out.println("Please enter new info:");
             System.out.println("If you don't want to change value of field, please just press Enter");
             System.out.print("Name => ");
