@@ -119,7 +119,7 @@ public class CmdLineServiceImpl implements CmdLineService {
             System.out.print("Phone number => ");
             String newPhone = ValidatorService.readPhone();
             System.out.print("Birthday => ");
-            String newBirthday = input.readLine();
+            String newBirthday = ValidatorService.readDate();
 
             this.service.editContact(name, newName,newPhone,newBirthday);
         }
