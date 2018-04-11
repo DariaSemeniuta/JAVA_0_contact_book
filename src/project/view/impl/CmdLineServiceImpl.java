@@ -70,7 +70,7 @@ public class CmdLineServiceImpl implements CmdLineService {
         System.out.print("Please enter name => ");
         String name = input.readLine();
         System.out.print("Please enter phone number => ");
-        String phone = input.readLine();
+        String phone = ValidatorService.readPhone();
         System.out.print("Please enter birthday => ");
         String birthday = ValidatorService.readDate();
         System.out.print("Please enter age => ");
@@ -117,7 +117,7 @@ public class CmdLineServiceImpl implements CmdLineService {
             System.out.print("Name => ");
             String newName = input.readLine();
             System.out.print("Phone number => ");
-            String newPhone = input.readLine();
+            String newPhone = ValidatorService.readPhone();
             System.out.print("Birthday => ");
             String newBirthday = input.readLine();
 
