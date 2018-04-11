@@ -45,7 +45,11 @@ public class ValidatorService {
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
         String inputDate = input.readLine();
         try{
-           boolean flag = dateFormat.parse(inputDate).toString().equals(inputDate);
+           if(!(dateFormat.format(dateFormat.parse(inputDate)).equals(inputDate))){
+               System.out.println("Incorrect format of input value!");
+               System.out.print("Please enter correct date of birthday => ");
+               return readDate();
+           }               
         } catch (ParseException e){
             System.out.println("Incorrect format of input value!");
             System.out.print("Please enter correct date of birthday => ");
