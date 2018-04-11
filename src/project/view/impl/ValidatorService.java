@@ -26,6 +26,20 @@ public class ValidatorService {
             }
         return age;
     }
+    
+    public static String readPhone() throws IOException{
+        String[] regex = {"^[+]\\d{12}", "^[0]\\d{9}", "^[+]\\d{1}[(]\\d{3}[)]\\d{3}\\d{2}\\d{2}", "^[(]\\d{3}[)]\\d{3}\\d{2}\\d{2}", "^[(]\\d{3}[)]\\d{3}[-]\\d{2}[-]\\d{2}", "^[+]\\d{1}[(]\\d{3}[)]\\d{3}[-]\\d{2}[-]\\d{2}", "^[+]\\d{1}[-]\\d{3}[-]\\d{3}[-]\\d{2}[-]\\d{2}", "^[0]\\d{2}[-]\\d{3}[-]\\d{2}[-]\\d{2}"};
+        String inputPhone = input.readLine();
+        
+        for(int i = 0; i < regex.length; ++i){
+            if(inputPhone.matches(regex[i])){
+                return inputPhone;
+            }
+        }
+        System.out.println("Incorrect format of input phoneNumber!");
+        System.out.print("Please enter correct phone number => ");
+        return readPhone();
+    }
 
     public static String readDate() throws IOException{
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
