@@ -6,6 +6,7 @@ import java.io.InputStreamReader;
 import java.util.List;
 
 import project.model.Contact;
+import project.services.ContactService;
 import project.services.impl.ContactServiceImpl;
 import project.view.CmdLineService;
 import project.view.impl.ValidatorService;
@@ -13,43 +14,46 @@ import project.view.impl.ValidatorService;
 public class CmdLineServiceImpl implements CmdLineService {
 
     private String[] menuItems = {"1. Create contact", "2. Edit contact", "3. Delete contact", "4. Find contact", "5. Show all contacts", "0. Exit"};
-    private  ContactServiceImpl service = new ContactServiceImpl();
+    private ContactService service ;
     private BufferedReader input = new BufferedReader(new InputStreamReader(System.in));
+
+    public CmdLineServiceImpl(ContactService service) {
+        this.service = service;
+    }
 
     @Override
     public void showMenu(){
         System.out.println(" Menu:");
-        for(int i=0; i< menuItems.length; ++i){
+
+        for (String item: menuItems) {
             System.out.println("|----------------------|");
-            System.out.println(" "+menuItems[i]);
+            System.out.println(" "+item);
         }
         System.out.println("|______________________|");
     }
 
     @Override
     public void getResponse() {
-
         String response;
-
         System.out.print("Please enter number of menu item => ");
 
         try{
             while (!(response=input.readLine()).equals("0")){
                 switch (response){
                     case "1" :
-                        this.createContact();
+                        createContact();
                         break;
                     case "2" :
-                        this.edit();
+                        edit();
                         break;
                     case "3" :
-                        this.delete();
+                        delete();
                         break;
                     case "4" :
-                        this.find();
+                        find();
                         break;
                     case "5" :
-                        this.showAll();
+                        showAll();
                         break;
                     default:
                         System.out.println("Please enter correct number");
@@ -69,21 +73,36 @@ public class CmdLineServiceImpl implements CmdLineService {
 
         System.out.print("Please enter name => ");
         String name = input.readLine();
+
         System.out.print("Please enter phone number => ");
-        String phone = ValidatorService.readPhone();
+        String phone;
+        while (! ValidatorService.readPhone(phone = input.readLine())){
+            System.out.println("Incorrect format of input value!");
+            System.out.print("Please enter correct phone number => ");
+        }
+
         System.out.print("Please enter birthday => ");
-        String birthday = ValidatorService.readDate();
+        String birthday;
+        while (! ValidatorService.readDate(birthday = input.readLine())){
+            System.out.println("Incorrect format of input value!");
+            System.out.print("Please enter correct date of birthday => ");
+        }
         System.out.print("Please enter age => ");
-        int age = ValidatorService.readInt();
+        String inputAge;
+        while (! ValidatorService.readInt(inputAge = input.readLine())){
+            System.out.println("Incorrect format of input value!");
+            System.out.print("Please enter correct (Integer)age => ");
+        }
+        int age = new Integer(inputAge);
         this.service.createContact(name, phone, birthday, age);
         System.out.println("Contact was created");
-        this.showMenu();
+        showMenu();
     }
 
     @Override
     public void showAll() {
         this.service.showAllContacts();
-        this.showMenu();
+        showMenu();
     }
 
     @Override
@@ -99,7 +118,7 @@ public class CmdLineServiceImpl implements CmdLineService {
         }
         else{
             System.out.println("No contacts were found");
-            this.showMenu();
+            showMenu();
         }
 
     }
@@ -117,13 +136,21 @@ public class CmdLineServiceImpl implements CmdLineService {
             System.out.print("Name => ");
             String newName = input.readLine();
             System.out.print("Phone number => ");
-            String newPhone = ValidatorService.readPhone();
+            String newPhone;
+            while (! ValidatorService.readPhone(newPhone = input.readLine())){
+                System.out.println("Incorrect format of input value!");
+                System.out.print("Please enter correct phone number => ");
+            }
             System.out.print("Birthday => ");
-            String newBirthday = ValidatorService.readDate();
+            String newBirthday;
+            while (! ValidatorService.readDate(newBirthday = input.readLine())){
+                System.out.println("Incorrect format of input value!");
+                System.out.print("Please enter correct date of birthday => ");
+            }
 
             this.service.editContact(name, newName,newPhone,newBirthday);
         }
-        this.showMenu();
+        showMenu();
     }
 
     @Override
@@ -140,7 +167,7 @@ public class CmdLineServiceImpl implements CmdLineService {
         }
         else{
             System.out.println("No contacts were found");
-            this.showMenu();
+            showMenu();
         }
 
         }

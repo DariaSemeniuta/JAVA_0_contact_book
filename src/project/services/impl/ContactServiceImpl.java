@@ -1,5 +1,6 @@
 package project.services.impl;
 
+import project.dao.ContactDao;
 import project.model.Contact;
 import project.services.ContactService;
 
@@ -13,17 +14,22 @@ public class ContactServiceImpl implements ContactService {
     private Map<Integer,Contact> contactList = new HashMap<>();
     private static int id = 0;
 
+    private ContactDao contactDao;
+
+    public ContactServiceImpl(ContactDao contactDao) {
+        this.contactDao = contactDao;
+    }
+
     @Override
     public void createContact(String name,String phone, String birthday, int age) {
         Contact contact = new Contact(name, phone, birthday, age);
-        contactList.put(id, contact);
-        id++;
+        contactDao.saveContact(contact);
     }
 
     @Override
     public List<Contact> findContact(String keyWord) {
         List<Contact> searchResult = new ArrayList<>();
-        for (Map.Entry<Integer, Contact> contacts: this.contactList.entrySet()) {
+        for (Map.Entry<Integer, Contact> contacts: contactList.entrySet()) {
             if((contacts.getValue().getName().contains(keyWord))||(contacts.getValue().getPhoneNumber().contains(keyWord))){
                 searchResult.add(contacts.getValue());
             }
@@ -33,7 +39,7 @@ public class ContactServiceImpl implements ContactService {
 
     @Override
     public void editContact(String name, String newName, String newPhone, String newBirthday) {
-        for (Map.Entry<Integer, Contact> contacts: this.contactList.entrySet()) {
+        for (Map.Entry<Integer, Contact> contacts: contactList.entrySet()) {
             if(contacts.getValue().getName().equals(name)){
                 if(! newName.isEmpty()){
                     contacts.getValue().setName(newName);
@@ -52,11 +58,9 @@ public class ContactServiceImpl implements ContactService {
 
     @Override
     public void deleteContact(Contact contact) {
-        int key = -1;
-        for (Map.Entry<Integer, Contact> contacts: this.contactList.entrySet()) {
+        for (Map.Entry<Integer, Contact> contacts: contactList.entrySet()) {
             if(contacts.getValue().equals(contact)){
                 this.contactList.remove(contacts.getKey());
-                //key = contacts.getKey();
             }
         }
         System.out.println("Contact was deleted");
@@ -64,9 +68,7 @@ public class ContactServiceImpl implements ContactService {
 
     @Override
     public void showAllContacts() {
-        for (Map.Entry<Integer,Contact> contacts: this.contactList.entrySet()) {
-            System.out.println(contacts.getValue().toString());
-        }
+        contactDao.showAll();
     }
 
 }
