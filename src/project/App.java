@@ -13,6 +13,7 @@ public class App {
         ContactDao contactDao = new FileSystemContactDaoImpl();
         ContactService contactService = new ContactServiceImpl(contactDao);
         CmdLineService cmd = new CmdLineServiceImpl(contactService);
+
         cmd.showMenu();
         cmd.getResponse();
     }

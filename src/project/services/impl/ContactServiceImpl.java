@@ -28,41 +28,33 @@ public class ContactServiceImpl implements ContactService {
 
     @Override
     public List<Contact> findContact(String keyWord) {
-        List<Contact> searchResult = new ArrayList<>();
-        for (Map.Entry<Integer, Contact> contacts: contactList.entrySet()) {
-            if((contacts.getValue().getName().contains(keyWord))||(contacts.getValue().getPhoneNumber().contains(keyWord))){
-                searchResult.add(contacts.getValue());
-            }
-        }
-        return  searchResult;
+        return  contactDao.findContact(keyWord);
     }
 
     @Override
     public void editContact(String name, String newName, String newPhone, String newBirthday) {
-        for (Map.Entry<Integer, Contact> contacts: contactList.entrySet()) {
-            if(contacts.getValue().getName().equals(name)){
-                if(! newName.isEmpty()){
-                    contacts.getValue().setName(newName);
-                }
-                if(! newPhone.isEmpty()){
-                    contacts.getValue().setPhoneNumber(newPhone);
-                }
-                if(! newBirthday.isEmpty()){
-                    contacts.getValue().setBirthday(newBirthday);
-                }
-                System.out.println("Contact was changed");
-                System.out.println(contacts.getValue().toString());
-            }
+        Contact newContact = contactDao.findContact(name).get(0);
+
+        if(! newName.isEmpty()){
+            newContact.setName(newName);
         }
+        if(! newPhone.isEmpty()){
+            newContact.setPhoneNumber(newPhone);
+        }
+        if(! newBirthday.isEmpty()){
+            newContact.setBirthday(newBirthday);
+        }
+
+        contactDao.editContact(name, newContact);
+
+        System.out.println("Contact was changed");
+        System.out.println(newContact.toString());
     }
+
 
     @Override
     public void deleteContact(Contact contact) {
-        for (Map.Entry<Integer, Contact> contacts: contactList.entrySet()) {
-            if(contacts.getValue().equals(contact)){
-                this.contactList.remove(contacts.getKey());
-            }
-        }
+        contactDao.removeContact(contact.getName());
         System.out.println("Contact was deleted");
     }
 

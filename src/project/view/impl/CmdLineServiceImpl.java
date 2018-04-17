@@ -94,14 +94,14 @@ public class CmdLineServiceImpl implements CmdLineService {
             System.out.print("Please enter correct (Integer)age => ");
         }
         int age = new Integer(inputAge);
-        this.service.createContact(name, phone, birthday, age);
+        service.createContact(name, phone, birthday, age);
         System.out.println("Contact was created");
         showMenu();
     }
 
     @Override
     public void showAll() {
-        this.service.showAllContacts();
+        service.showAllContacts();
         showMenu();
     }
 
@@ -109,7 +109,7 @@ public class CmdLineServiceImpl implements CmdLineService {
     public void find() throws IOException {
         System.out.print("Please enter info(name or phone number) for search=>");
         String keyWord = input.readLine();
-        List<Contact> searchResult = this.service.findContact(keyWord);
+        List<Contact> searchResult = service.findContact(keyWord);
         if (searchResult.size() > 0){
             System.out.println("The following contacts were found:");
             for (Contact result:searchResult){
@@ -127,7 +127,7 @@ public class CmdLineServiceImpl implements CmdLineService {
     public void edit() throws IOException {
         System.out.print("Please enter contact name, which you want to edit =>");
         String name = input.readLine();
-        if (this.service.findContact(name).size() == 0){
+        if (service.findContact(name).size() == 0){
             System.out.println("There is no "+name+" in contact book");
         } else {
 
@@ -138,17 +138,23 @@ public class CmdLineServiceImpl implements CmdLineService {
             System.out.print("Phone number => ");
             String newPhone;
             while (! ValidatorService.readPhone(newPhone = input.readLine())){
+                if(newPhone.isEmpty()){
+                    break;
+                }
                 System.out.println("Incorrect format of input value!");
                 System.out.print("Please enter correct phone number => ");
             }
             System.out.print("Birthday => ");
             String newBirthday;
             while (! ValidatorService.readDate(newBirthday = input.readLine())){
+                if(newBirthday.isEmpty()){
+                    break;
+                }
                 System.out.println("Incorrect format of input value!");
                 System.out.print("Please enter correct date of birthday => ");
             }
 
-            this.service.editContact(name, newName,newPhone,newBirthday);
+            service.editContact(name, newName,newPhone,newBirthday);
         }
         showMenu();
     }
@@ -157,18 +163,17 @@ public class CmdLineServiceImpl implements CmdLineService {
     public void delete() throws IOException{
         System.out.print("Please enter contact name, which you want to delete =>");
         String name = input.readLine();
-        List<Contact> searchResult = this.service.findContact(name);
+        List<Contact> searchResult = service.findContact(name);
         if (searchResult.size() > 0){
             System.out.println("The following contacts will be deleted:");
             for (Contact result:searchResult){
                 System.out.println(result.toString());
-                this.service.deleteContact(result);
+                service.deleteContact(result);
             }
         }
         else{
             System.out.println("No contacts were found");
             showMenu();
         }
-
-        }
+    }
 }
