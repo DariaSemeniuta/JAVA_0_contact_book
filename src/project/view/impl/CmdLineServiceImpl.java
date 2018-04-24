@@ -7,9 +7,8 @@ import java.util.List;
 
 import project.model.Contact;
 import project.services.ContactService;
-import project.services.impl.ContactServiceImpl;
 import project.view.CmdLineService;
-import project.view.impl.ValidatorService;
+import project.utils.ValidatorUtils;
 
 public class CmdLineServiceImpl implements CmdLineService {
 
@@ -76,20 +75,20 @@ public class CmdLineServiceImpl implements CmdLineService {
 
         System.out.print("Please enter phone number => ");
         String phone;
-        while (! ValidatorService.readPhone(phone = input.readLine())){
+        while (! ValidatorUtils.readPhone(phone = input.readLine())){
             System.out.println("Incorrect format of input value!");
             System.out.print("Please enter correct phone number => ");
         }
 
         System.out.print("Please enter birthday => ");
         String birthday;
-        while (! ValidatorService.readDate(birthday = input.readLine())){
+        while (! ValidatorUtils.readDate(birthday = input.readLine())){
             System.out.println("Incorrect format of input value!");
             System.out.print("Please enter correct date of birthday => ");
         }
         System.out.print("Please enter age => ");
         String inputAge;
-        while (! ValidatorService.readInt(inputAge = input.readLine())){
+        while (! ValidatorUtils.readInt(inputAge = input.readLine())){
             System.out.println("Incorrect format of input value!");
             System.out.print("Please enter correct (Integer)age => ");
         }
@@ -118,9 +117,8 @@ public class CmdLineServiceImpl implements CmdLineService {
         }
         else{
             System.out.println("No contacts were found");
-            showMenu();
         }
-
+        showMenu();
     }
 
     @Override
@@ -137,7 +135,7 @@ public class CmdLineServiceImpl implements CmdLineService {
             String newName = input.readLine();
             System.out.print("Phone number => ");
             String newPhone;
-            while (! ValidatorService.readPhone(newPhone = input.readLine())){
+            while (! ValidatorUtils.readPhone(newPhone = input.readLine())){
                 if(newPhone.isEmpty()){
                     break;
                 }
@@ -146,7 +144,7 @@ public class CmdLineServiceImpl implements CmdLineService {
             }
             System.out.print("Birthday => ");
             String newBirthday;
-            while (! ValidatorService.readDate(newBirthday = input.readLine())){
+            while (! ValidatorUtils.readDate(newBirthday = input.readLine())){
                 if(newBirthday.isEmpty()){
                     break;
                 }
@@ -173,7 +171,7 @@ public class CmdLineServiceImpl implements CmdLineService {
         }
         else{
             System.out.println("No contacts were found");
-            showMenu();
         }
+        showMenu();
     }
 }

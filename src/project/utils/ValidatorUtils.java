@@ -1,13 +1,13 @@
-package project.view.impl;
+package project.utils;
 
 
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
-public class ValidatorService {
+public class ValidatorUtils {
 
-    private ValidatorService(){
+    private ValidatorUtils(){
     }
 
     public static Boolean readInt(String inputInt) throws IOException{

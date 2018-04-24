@@ -11,9 +11,6 @@ import java.util.Map;
 
 public class ContactServiceImpl implements ContactService {
 
-    private Map<Integer,Contact> contactList = new HashMap<>();
-    private static int id = 0;
-
     private ContactDao contactDao;
 
     public ContactServiceImpl(ContactDao contactDao) {
