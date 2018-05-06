@@ -16,12 +16,15 @@ public class CmdLineServiceImpl implements CmdLineService {
     private ContactService service ;
     private BufferedReader input = new BufferedReader(new InputStreamReader(System.in));
 
+    private ContactFrame gui = new ContactFrame();
+
     public CmdLineServiceImpl(ContactService service) {
         this.service = service;
     }
 
     @Override
     public void showMenu(){
+
         System.out.println(" Menu:");
 
         for (String item: menuItems) {

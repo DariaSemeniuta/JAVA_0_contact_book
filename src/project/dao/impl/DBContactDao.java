@@ -71,6 +71,7 @@ public class DBContactDao implements ContactDao {
                 Contact contact = new Contact(result.getString("NAME"), result.getString("PHONE"), result.getString("BIRTHDAY"), result.getInt("AGE"));
                 System.out.println(contact.toString());
             }
+            result.close();
 
         }catch (SQLException e){
             System.out.println("Can't connect to DB");
@@ -93,6 +94,7 @@ public class DBContactDao implements ContactDao {
             while(result.next()){
                 contacts.add(new Contact(result.getString("NAME"), result.getString("PHONE"), result.getString("BIRTHDAY"), result.getInt("AGE")));
             }
+            result.close();
         }catch (SQLException e){
             System.out.println("Can't connect to DB");
             e.printStackTrace();
