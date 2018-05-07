@@ -4,10 +4,7 @@ import project.dao.ContactDao;
 import project.model.Contact;
 import project.services.ContactService;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class ContactServiceImpl implements ContactService {
 
@@ -56,8 +53,8 @@ public class ContactServiceImpl implements ContactService {
     }
 
     @Override
-    public void showAllContacts() {
-        contactDao.showAll();
+    public List<Contact> showAllContacts() {
+        return contactDao.showAll();
     }
 
 }

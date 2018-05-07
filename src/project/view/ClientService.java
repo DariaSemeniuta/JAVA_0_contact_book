@@ -2,10 +2,11 @@ package project.view;
 
 import java.io.IOException;
 
-public interface CmdLineService {
+public interface ClientService {
     /**
      *
      */
+
     void showMenu();
     void getResponse();
     void createContact() throws IOException;

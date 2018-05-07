@@ -4,9 +4,8 @@ import project.dao.ContactDao;
 import project.dao.impl.DBContactDao;
 import project.services.ContactService;
 import project.services.impl.ContactServiceImpl;
-import project.view.CmdLineService;
-import project.view.impl.CmdLineServiceImpl;
-import project.view.impl.ContactFrame;
+import project.view.ClientService;
+import project.view.impl.ClientServiceImpl;
 
 public class App {
 
@@ -15,7 +14,7 @@ public class App {
 
         ContactDao contactDao = new DBContactDao();//new FileSystemContactDaoImpl();
         ContactService contactService = new ContactServiceImpl(contactDao);
-        CmdLineService cmd = new CmdLineServiceImpl(contactService);
+        ClientService cmd = new ClientServiceImpl(contactService);//new CmdLineServiceImpl(contactService);
 
         cmd.showMenu();
         cmd.getResponse();

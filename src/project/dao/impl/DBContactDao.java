@@ -62,22 +62,25 @@ public class DBContactDao implements ContactDao {
     }
 
     @Override
-    public void showAll() {
+    public List<Contact> showAll() {
+        List<Contact> allContacts = new ArrayList<>();
         try(Connection connection = DriverManager.getConnection(DB_URL, DB_USER, "");
             Statement statement = connection.createStatement()){
 
             ResultSet result = statement.executeQuery("SELECT * from "+ DB_TABLE +";");
             while (result.next()){
                 Contact contact = new Contact(result.getString("NAME"), result.getString("PHONE"), result.getString("BIRTHDAY"), result.getInt("AGE"));
+                allContacts.add(contact);
                 System.out.println(contact.toString());
             }
             result.close();
+
 
         }catch (SQLException e){
             System.out.println("Can't connect to DB");
             e.printStackTrace();
         }
-
+        return allContacts;
     }
 
     @Override

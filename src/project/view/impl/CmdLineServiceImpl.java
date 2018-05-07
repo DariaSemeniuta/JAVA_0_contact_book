@@ -3,20 +3,23 @@ package project.view.impl;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.List;
 
 import project.model.Contact;
+import project.model.ContactModel;
 import project.services.ContactService;
-import project.view.CmdLineService;
+import project.view.ClientService;
 import project.utils.ValidatorUtils;
+import project.view.impl.frames.MainForm;
 
-public class CmdLineServiceImpl implements CmdLineService {
+public class CmdLineServiceImpl implements ClientService {
 
     private String[] menuItems = {"1. Create contact", "2. Edit contact", "3. Delete contact", "4. Find contact", "5. Show all contacts", "0. Exit"};
     private ContactService service ;
     private BufferedReader input = new BufferedReader(new InputStreamReader(System.in));
 
-    private ContactFrame gui = new ContactFrame();
+
 
     public CmdLineServiceImpl(ContactService service) {
         this.service = service;
@@ -24,7 +27,7 @@ public class CmdLineServiceImpl implements CmdLineService {
 
     @Override
     public void showMenu(){
-
+        showAll();
         System.out.println(" Menu:");
 
         for (String item: menuItems) {
@@ -103,8 +106,10 @@ public class CmdLineServiceImpl implements CmdLineService {
 
     @Override
     public void showAll() {
-        service.showAllContacts();
-        showMenu();
+        List<Contact> allContacts = service.showAllContacts();
+        for (Contact contact: allContacts) {
+            System.out.println(contact.toString());
+        }
     }
 
     @Override

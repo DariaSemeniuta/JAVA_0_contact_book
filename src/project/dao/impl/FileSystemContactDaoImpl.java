@@ -5,24 +5,26 @@ import project.model.Contact;
 
 import java.io.*;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class FileSystemContactDaoImpl implements ContactDao {
 
     private static final File FILE = new File("data");
 
     @Override
-    public void showAll() {
+    public List<Contact> showAll() {
+        List<Contact> contacts = new ArrayList<>();
         try(BufferedReader reader = new BufferedReader(new FileReader(FILE))){
             String line;
             while ( (line = reader.readLine()) != null ){
                 System.out.println(line);
+                Contact contact = parseFile(line);
+                contacts.add(contact);
             }
         }catch (IOException e){
             System.out.println("Error appears during writing to file");
         }
+        return contacts;
     }
 
     @Override
