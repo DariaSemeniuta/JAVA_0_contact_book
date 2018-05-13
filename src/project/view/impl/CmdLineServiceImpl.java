@@ -3,15 +3,12 @@ package project.view.impl;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
 import java.util.List;
 
 import project.model.Contact;
-import project.model.ContactModel;
 import project.services.ContactService;
 import project.view.ClientService;
 import project.utils.ValidatorUtils;
-import project.view.impl.frames.MainForm;
 
 public class CmdLineServiceImpl implements ClientService {
 

@@ -4,8 +4,7 @@ import project.dao.ContactDao;
 import project.dao.impl.DBContactDao;
 import project.services.ContactService;
 import project.services.impl.ContactServiceImpl;
-import project.view.ClientService;
-import project.view.impl.ClientServiceImpl;
+import project.view.impl.container.MainForm;
 
 public class App {
 
@@ -14,10 +13,10 @@ public class App {
 
         ContactDao contactDao = new DBContactDao();//new FileSystemContactDaoImpl();
         ContactService contactService = new ContactServiceImpl(contactDao);
-        ClientService cmd = new ClientServiceImpl(contactService);//new CmdLineServiceImpl(contactService);
-
-        cmd.showMenu();
-        cmd.getResponse();
+        //ClientService cmd = new ClientServiceImpl(contactService);//new CmdLineServiceImpl(contactService);
+        MainForm form = new MainForm(contactService);
+        //cmd.showMenu();
+        //cmd.getResponse();
     }
 
 }

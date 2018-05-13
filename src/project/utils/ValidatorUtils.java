@@ -10,7 +10,7 @@ public class ValidatorUtils {
     private ValidatorUtils(){
     }
 
-    public static Boolean readInt(String inputInt) throws IOException{
+    public static Boolean readInt(String inputInt){
         try {
               new Integer(inputInt);
             } catch (NumberFormatException e) {
@@ -19,7 +19,7 @@ public class ValidatorUtils {
         return true;
     }
     
-    public static Boolean readPhone(String inputPhone) throws IOException{
+    public static Boolean readPhone(String inputPhone){
         String[] regex = {"^[+]\\d{12}", "^[0]\\d{9}", "^[+]\\d{1}[(]\\d{3}[)]\\d{3}\\d{2}\\d{2}", "^[(]\\d{3}[)]\\d{3}\\d{2}\\d{2}", "^[(]\\d{3}[)]\\d{3}[-]\\d{2}[-]\\d{2}", "^[+]\\d{1}[(]\\d{3}[)]\\d{3}[-]\\d{2}[-]\\d{2}", "^[+]\\d{1}[-]\\d{3}[-]\\d{3}[-]\\d{2}[-]\\d{2}", "^[0]\\d{2}[-]\\d{3}[-]\\d{2}[-]\\d{2}"};
 
         for(int i = 0; i < regex.length; ++i){
