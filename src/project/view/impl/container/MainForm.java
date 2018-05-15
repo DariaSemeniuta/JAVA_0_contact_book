@@ -5,6 +5,7 @@ import project.model.ContactModel;
 import project.services.ContactService;
 
 import javax.swing.*;
+import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -44,10 +45,12 @@ public class MainForm extends JFrame implements ActionListener {
 
         JLabel label = new JLabel("Find");
 
+        label.setFont(new Font("Verdana", Font.BOLD, 15));
         JPanel findPanel = new JPanel();
         findPanel.setLayout(new BorderLayout());
         findPanel.add(label, BorderLayout.LINE_START);
         findPanel.add(findText, BorderLayout.AFTER_LAST_LINE);
+        findPanel.setBackground(Color.lightGray);
         add(findPanel, BorderLayout.NORTH);
 
         setBounds(100, 200, 900, 400);
@@ -93,6 +96,7 @@ public class MainForm extends JFrame implements ActionListener {
         switch (action) {
             case "CREATE":
                 new ContactDialog(this, Actions.CREATE.getAct(), null);
+                loadContacts();
                 break;
             case "EDIT":
                 new ContactDialog(this, Actions.EDIT.getAct(), contact);
